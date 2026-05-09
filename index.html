@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dino Adventure</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ===== Title Screen ===== -->
+    <section class="screen screen--title is-active" data-screen="title">
+      <div class="title__bg"></div>
+      <div class="title__content">
+        <div class="title__hero">
+          <div class="title__dino" aria-hidden="true"></div>
+          <div class="title__logo">
+            <h1>DINO</h1>
+            <span>ADVENTURE</span>
+          </div>
+        </div>
+        <div class="title__menu">
+          <button class="btn btn--primary" data-action="play">PLAY</button>
+          <button class="btn btn--ghost" data-action="how-to-play">HOW TO PLAY</button>
+          <button class="btn btn--ghost" data-action="settings">SETTINGS</button>
+        </div>
+        <div class="title__icons">
+          <button class="icon-btn" id="toggleSfx" title="Toggle sound effects" aria-label="Toggle sound effects">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+          </button>
+          <button class="icon-btn" id="toggleMusic" title="Toggle music" aria-label="Toggle music">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Game Screen ===== -->
+    <section class="screen screen--game" data-screen="game">
+      <canvas id="gameCanvas" width="1280" height="640"></canvas>
+      <div class="hud">
+        <div class="hud__scores">
+          <div class="score-card">
+            <div class="score-card__label">SCORE</div>
+            <div class="score-card__value" id="scoreValue">0</div>
+          </div>
+          <div class="score-card">
+            <div class="score-card__label">BEST</div>
+            <div class="score-card__value" id="bestValue">0</div>
+          </div>
+        </div>
+        <button class="hud__pause" id="pauseBtn" aria-label="Pause">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+        </button>
+      </div>
+      <div class="hud__hint" id="controlsHint">
+        Use <kbd>↑</kbd> to Jump <kbd>↓</kbd> to Slide
+      </div>
+
+      <!-- Pause overlay -->
+      <div class="overlay overlay--pause" id="pauseOverlay" hidden>
+        <div class="overlay__panel">
+          <h2>PAUSED</h2>
+          <button class="btn btn--primary" data-action="resume">RESUME</button>
+          <button class="btn btn--ghost" data-action="home">HOME</button>
+        </div>
+      </div>
+
+      <!-- Game over overlay -->
+      <div class="overlay overlay--gameover" id="gameOverOverlay" hidden>
+        <div class="overlay__panel">
+          <h2>GAME OVER</h2>
+          <div class="overlay__scores">
+            <div class="score-card">
+              <div class="score-card__label">SCORE</div>
+              <div class="score-card__value" id="finalScore">0</div>
+            </div>
+            <div class="score-card">
+              <div class="score-card__label">BEST</div>
+              <div class="score-card__value" id="finalBest">0</div>
+            </div>
+          </div>
+          <div class="overlay__actions">
+            <button class="btn btn--primary" data-action="retry">RETRY</button>
+            <button class="btn btn--ghost" data-action="home">HOME</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== How to Play Screen ===== -->
+    <section class="screen screen--howto" data-screen="how-to-play">
+      <div class="card">
+        <h2>How to Play</h2>
+        <ul class="howto-list">
+          <li>
+            <span class="key key--lg">↑</span>
+            <div>
+              <strong>Press UP ARROW to JUMP</strong>
+              <p>Jump over cacti and obstacles.</p>
+            </div>
+          </li>
+          <li>
+            <span class="key key--lg">↓</span>
+            <div>
+              <strong>Press DOWN ARROW to SLIDE</strong>
+              <p>Slide under low obstacles.</p>
+            </div>
+          </li>
+        </ul>
+
+        <h3>Controls</h3>
+        <div class="controls-row">
+          <div class="keypad">
+            <span class="key">↑</span>
+            <span class="key">←</span>
+            <span class="key">↓</span>
+            <span class="key">→</span>
+          </div>
+          <span class="controls-or">OR</span>
+          <div class="mouse">
+            <svg viewBox="0 0 48 64" width="48" height="64" aria-hidden="true">
+              <rect x="4" y="4" width="40" height="56" rx="20" ry="20" fill="#2a2a2a" stroke="#888" stroke-width="2"/>
+              <line x1="24" y1="6" x2="24" y2="28" stroke="#888" stroke-width="2"/>
+              <rect x="22" y="10" width="4" height="14" rx="1.5" fill="#666"/>
+            </svg>
+            <div>
+              <strong>Click to Jump</strong>
+              <p>Hold to Slide</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="card__note">The game gets faster as you score more!</p>
+        <button class="btn btn--primary" data-action="home">BACK</button>
+      </div>
+    </section>
+
+    <!-- ===== Settings Screen ===== -->
+    <section class="screen screen--settings" data-screen="settings">
+      <div class="card">
+        <h2>Settings</h2>
+
+        <label class="setting">
+          <span>Sound Effects</span>
+          <input type="checkbox" id="setSfx" checked />
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+
+        <label class="setting">
+          <span>Music</span>
+          <input type="checkbox" id="setMusic" checked />
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+
+        <label class="setting setting--col">
+          <span>Difficulty</span>
+          <select id="setDifficulty">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+
+        <button class="btn btn--ghost btn--small" id="resetBest">Reset Best Score</button>
+        <button class="btn btn--primary" data-action="home">BACK</button>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
