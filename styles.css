@@ -178,9 +178,140 @@ body {
   position: absolute;
   top: 16px; left: 16px; right: 16px;
   display: flex; justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  gap: 16px;
+}
+.hud__left, .hud__right { display: flex; flex-direction: column; gap: 8px; }
+.hud__right { align-items: flex-end; min-width: 220px; }
+.hud__top-right { display: flex; gap: 8px; align-items: center; pointer-events: auto; }
+.hud__scores { display: flex; flex-direction: column; gap: 6px; }
+.coin-card {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 14px;
+}
+.coin-card__sep { color: var(--muted); }
+.coin-card__total { color: var(--muted); }
+
+.powerup-row {
+  display: flex; gap: 6px;
   pointer-events: none;
 }
-.hud__scores { display: flex; flex-direction: column; gap: 6px; }
+.powerup-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+}
+.powerup-chip__bar {
+  width: 36px; height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px; overflow: hidden;
+}
+.powerup-chip__fill { height: 100%; background: currentColor; transition: width 120ms linear; }
+.powerup-chip--shield { color: #6cc6ff; }
+.powerup-chip--magnet { color: #f7c948; }
+.powerup-chip--slowmo { color: #b18cff; }
+
+.missions {
+  display: flex; flex-direction: column; gap: 6px;
+  pointer-events: none;
+  width: 240px;
+}
+.mission {
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #e7e7ea;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 10px;
+  align-items: center;
+  transition: background 200ms ease, opacity 200ms ease;
+}
+.mission__label { line-height: 1.2; }
+.mission__reward {
+  font-size: 11px;
+  color: #f7c948;
+  font-weight: 700;
+}
+.mission__bar {
+  grid-column: 1 / -1;
+  height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mission__fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 200ms ease;
+}
+.mission--done {
+  background: rgba(127,166,80,0.18);
+  border-color: rgba(127,166,80,0.4);
+  opacity: 0.85;
+}
+.mission--done .mission__fill { background: #f7c948; }
+
+.toast-stack {
+  position: absolute;
+  bottom: 64px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column-reverse; gap: 8px;
+  pointer-events: none;
+  z-index: 4;
+}
+.toast {
+  background: rgba(20,22,28,0.95);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow);
+  animation: toast-in 220ms ease, toast-out 220ms ease 2.4s forwards;
+  min-width: 220px;
+}
+.toast strong { color: #f7c948; margin-right: 4px; }
+.toast--powerup { border-left-color: #6cc6ff; }
+.toast--mission { border-left-color: var(--accent); }
+.toast--combo { border-left-color: #f7c948; }
+@keyframes toast-in { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes toast-out { to { transform: translateY(-6px); opacity: 0; } }
+
+.run-summary {
+  display: flex; flex-direction: column; gap: 4px;
+  width: 100%;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 4px;
+}
+.run-summary__row {
+  display: flex; justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
+}
+.run-summary__row strong { color: #fff; font-weight: 700; }
+.overlay__panel--wide { min-width: 360px; }
 .hud__pause {
   pointer-events: auto;
   width: 40px; height: 40px;

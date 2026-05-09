@@ -64,6 +64,30 @@ export class SFX {
         g.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
         o.start(now); o.stop(now + 0.09);
         break;
+      case "coin":
+        o.type = "triangle";
+        o.frequency.setValueAtTime(880, now);
+        o.frequency.setValueAtTime(1320, now + 0.05);
+        g.gain.setValueAtTime(0.12, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+        o.start(now); o.stop(now + 0.17);
+        break;
+      case "powerup":
+        o.type = "sine";
+        o.frequency.setValueAtTime(440, now);
+        o.frequency.linearRampToValueAtTime(1200, now + 0.3);
+        g.gain.setValueAtTime(0.18, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+        o.start(now); o.stop(now + 0.36);
+        break;
+      case "shield-break":
+        o.type = "square";
+        o.frequency.setValueAtTime(180, now);
+        o.frequency.exponentialRampToValueAtTime(60, now + 0.25);
+        g.gain.setValueAtTime(0.2, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+        o.start(now); o.stop(now + 0.31);
+        break;
     }
   }
 

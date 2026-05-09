@@ -116,23 +116,41 @@
     <section class="screen screen--game" data-screen="game">
       <canvas id="gameCanvas" width="1280" height="640"></canvas>
       <div class="hud">
-        <div class="hud__scores">
-          <div class="score-card">
-            <div class="score-card__label">SCORE</div>
-            <div class="score-card__value" id="scoreValue">0</div>
+        <div class="hud__left">
+          <div class="hud__scores">
+            <div class="score-card">
+              <div class="score-card__label">SCORE</div>
+              <div class="score-card__value" id="scoreValue">0</div>
+            </div>
+            <div class="score-card">
+              <div class="score-card__label">BEST</div>
+              <div class="score-card__value" id="bestValue">0</div>
+            </div>
           </div>
-          <div class="score-card">
-            <div class="score-card__label">BEST</div>
-            <div class="score-card__value" id="bestValue">0</div>
-          </div>
+          <div class="powerup-row" id="powerupRow"></div>
         </div>
-        <button class="hud__pause" id="pauseBtn" aria-label="Pause">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
-        </button>
+        <div class="hud__right">
+          <div class="hud__top-right">
+            <div class="coin-card" title="Total coins (this run / lifetime)">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="#f7c948" stroke="#caa030" stroke-width="2"/>
+                <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#7a5e1a">¢</text>
+              </svg>
+              <span id="coinRun">0</span>
+              <span class="coin-card__sep">/</span>
+              <span id="coinTotal" class="coin-card__total">0</span>
+            </div>
+            <button class="hud__pause" id="pauseBtn" aria-label="Pause">
+              <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+            </button>
+          </div>
+          <div class="missions" id="missionsList"></div>
+        </div>
       </div>
       <div class="hud__hint" id="controlsHint">
         Use <kbd>↑</kbd> to Jump <kbd>↓</kbd> to Slide
       </div>
+      <div class="toast-stack" id="toastStack" aria-live="polite"></div>
 
       <!-- Pause overlay -->
       <div class="overlay overlay--pause" id="pauseOverlay" hidden>
@@ -145,7 +163,7 @@
 
       <!-- Game over overlay -->
       <div class="overlay overlay--gameover" id="gameOverOverlay" hidden>
-        <div class="overlay__panel">
+        <div class="overlay__panel overlay__panel--wide">
           <h2>GAME OVER</h2>
           <div class="overlay__scores">
             <div class="score-card">
@@ -156,6 +174,12 @@
               <div class="score-card__label">BEST</div>
               <div class="score-card__value" id="finalBest">0</div>
             </div>
+          </div>
+          <div class="run-summary">
+            <div class="run-summary__row"><span>Coins earned</span><strong id="finalCoins">0</strong></div>
+            <div class="run-summary__row"><span>Longest combo</span><strong id="finalCombo">x0</strong></div>
+            <div class="run-summary__row"><span>Obstacles cleared</span><strong id="finalCleared">0</strong></div>
+            <div class="run-summary__row"><span>Missions completed</span><strong id="finalMissions">0</strong></div>
           </div>
           <div class="overlay__actions">
             <button class="btn btn--primary" data-action="retry">RETRY</button>
