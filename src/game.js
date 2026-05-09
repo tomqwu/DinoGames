@@ -1,14 +1,14 @@
 // Dino Adventure — canvas game engine
-// Physics, obstacles, coins, powerups, combo system, and day/night rendering.
+// Physics, obstacles, coins, powerups, combo system, daylight rendering.
 
 const GROUND_Y_RATIO = 0.82;
 const BASE_SPEED = 6.5;
 const GRAVITY = 0.85;
 const JUMP_VELOCITY = -16;
 const DUCK_GRAVITY_BOOST = 1.6;
-const COMBO_WINDOW_FRAMES = 120;          // ~2s at 60fps
-const POWERUP_DURATION_FRAMES = 6 * 60;   // 6s
-const COIN_VALUE = 5;                     // score per coin
+const COMBO_WINDOW_FRAMES = 120;
+const POWERUP_DURATION_FRAMES = 6 * 60;
+const COIN_VALUE = 5;
 
 const DIFFICULTY = {
   easy:   { speedMul: 0.85, gapMul: 1.25, growth: 0.0010 },
@@ -25,8 +25,8 @@ export class DinoGame {
     this.opts = opts;
     this.onGameOver = opts.onGameOver || (() => {});
     this.onScore = opts.onScore || (() => {});
-    this.onStats = opts.onStats || (() => {});  // emits live run stats
-    this.onEvent = opts.onEvent || (() => {});  // events: jump, slide-clear, coin, powerup, combo
+    this.onStats = opts.onStats || (() => {});
+    this.onEvent = opts.onEvent || (() => {});
     this.sfx = opts.sfx;
 
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -69,7 +69,6 @@ export class DinoGame {
     this.comboTimer = 0;
     this.activePowerups = { shield: 0, magnet: 0, slowmo: 0 };
 
-    // Per-run stats — exposed via onStats / onGameOver
     this.stats = {
       score: 0,
       coins: 0,
@@ -184,7 +183,6 @@ export class DinoGame {
     const w = this.canvas.width / this.dpr;
     const d = this.dino;
 
-    // Speed ramps over time (scaled by difficulty) — slowed under slow-mo
     const slow = this.activePowerups.slowmo > 0 ? 0.55 : 1.0;
     this.speed += this.difficulty.growth;
     const effSpeed = this.speed * slow;
@@ -200,16 +198,13 @@ export class DinoGame {
     }
 
     this.stats.survivedFrames++;
-    // Tick survive mission once per second
     if (this.stats.survivedFrames % 60 === 0) this.onStats(this.stats);
 
-    // Combo timer
     if (this.combo > 0) {
       this.comboTimer--;
       if (this.comboTimer <= 0) this.combo = 0;
     }
 
-    // Powerup timers
     for (const k of POWERUP_TYPES) {
       if (this.activePowerups[k] > 0) {
         this.activePowerups[k]--;
@@ -217,7 +212,6 @@ export class DinoGame {
       }
     }
 
-    // Dino physics
     d.vy += GRAVITY * (d.ducking && !d.onGround ? DUCK_GRAVITY_BOOST : 1);
     d.y += d.vy;
     if (d.y >= this.groundY) {
@@ -227,12 +221,10 @@ export class DinoGame {
     }
     d.runFrame = (d.runFrame + effSpeed * 0.05) % 2;
 
-    // Parallax
     this.parallax.far = (this.parallax.far + effSpeed * 0.15) % w;
     this.parallax.mid = (this.parallax.mid + effSpeed * 0.4) % w;
     this.parallax.near = (this.parallax.near + effSpeed) % w;
 
-    // Clouds
     for (const c of this.clouds) {
       c.x -= c.speed;
       if (c.x < -80) {
@@ -242,7 +234,6 @@ export class DinoGame {
       }
     }
 
-    // Spawn obstacles
     this.spawnTimer++;
     if (this.spawnTimer >= this.nextSpawnIn) {
       this._spawnObstacle();
@@ -253,7 +244,6 @@ export class DinoGame {
       this.nextSpawnIn = Math.floor((minGap + Math.random() * (maxGap - minGap)) * speedFactor);
     }
 
-    // Spawn coins
     this.coinSpawnTimer++;
     if (this.coinSpawnTimer >= this.nextCoinIn) {
       this._spawnCoinArc();
@@ -261,7 +251,6 @@ export class DinoGame {
       this.nextCoinIn = 80 + Math.floor(Math.random() * 140);
     }
 
-    // Spawn powerups
     this.powerupSpawnTimer++;
     if (this.powerupSpawnTimer >= this.nextPowerupIn) {
       this._spawnPowerup();
@@ -269,12 +258,10 @@ export class DinoGame {
       this.nextPowerupIn = 10 * 60 + Math.floor(Math.random() * 8 * 60);
     }
 
-    // Move + cull obstacles, track which scrolled past for combos
     for (const o of this.obstacles) {
       const wasAhead = o.x > d.x;
       o.x -= effSpeed;
       if (o.type === "ptero") o.flap = (o.flap + 0.2) % (Math.PI * 2);
-      // count clears once obstacle scrolls past dino
       if (wasAhead && o.x + o.w < d.x && !o._counted) {
         o._counted = true;
         this._registerClear(o.type);
@@ -282,7 +269,6 @@ export class DinoGame {
     }
     this.obstacles = this.obstacles.filter(o => o.x + o.w > -20);
 
-    // Move coins & magnet attraction
     const magnet = this.activePowerups.magnet > 0;
     for (const c of this.coins) {
       c.x -= effSpeed;
@@ -298,7 +284,6 @@ export class DinoGame {
         }
       }
     }
-    // Coin pickup
     const dinoBox = this._dinoBox();
     this.coins = this.coins.filter(c => {
       if (c.x < -30) return false;
@@ -306,7 +291,7 @@ export class DinoGame {
       if (c.x > dinoBox.x - r && c.x < dinoBox.x + dinoBox.w + r &&
           c.y > dinoBox.y - r && c.y < dinoBox.y + dinoBox.h + r) {
         this.stats.coins++;
-        this.distance += COIN_VALUE * 5; // coins also tick score
+        this.distance += COIN_VALUE * 5;
         this._spawnParticles(c.x, c.y, "#f7c948", 8);
         this.sfx?.play("coin");
         this.onEvent("coin");
@@ -316,7 +301,6 @@ export class DinoGame {
       return true;
     });
 
-    // Move powerups & pickup
     this.powerups = this.powerups.filter(p => {
       p.x -= effSpeed;
       p.bob += 0.12;
@@ -334,7 +318,6 @@ export class DinoGame {
       return true;
     });
 
-    // Particles
     for (const p of this.particles) {
       p.x += p.vx; p.y += p.vy;
       p.vy += 0.25;
@@ -342,15 +325,12 @@ export class DinoGame {
     }
     this.particles = this.particles.filter(p => p.life > 0);
 
-    // Toasts
     for (const t of this.toasts) t.life--;
     this.toasts = this.toasts.filter(t => t.life > 0);
 
-    // Collisions with obstacles
     for (const o of this.obstacles) {
       if (this._intersect(dinoBox, o)) {
         if (this.activePowerups.shield > 0) {
-          // consume shield, destroy obstacle
           this.activePowerups.shield = 0;
           this._spawnParticles(o.x + o.w / 2, o.y + o.h / 2, "#6cc6ff", 18);
           this.sfx?.play("shield-break");
@@ -372,7 +352,7 @@ export class DinoGame {
     this.comboTimer = COMBO_WINDOW_FRAMES;
     if (this.combo > this.stats.maxCombo) this.stats.maxCombo = this.combo;
     if (this.combo >= 2) {
-      this.distance += this.combo * 8; // combo bonus
+      this.distance += this.combo * 8;
       this.onEvent("combo", { combo: this.combo });
       if (this.combo === 5 || this.combo === 10 || this.combo === 20) {
         this.sfx?.play("milestone");
@@ -420,11 +400,10 @@ export class DinoGame {
     const count = 3 + Math.floor(Math.random() * 4);
     const startX = w + 30;
     const apex = this.groundY - (90 + Math.random() * 80);
-    const span = 28; // px between coins
+    const span = 28;
     for (let i = 0; i < count; i++) {
       const t = i / (count - 1 || 1);
       const x = startX + i * span;
-      // arc: y = lerp(ground - 30, apex, sin(t*pi))
       const y = this.groundY - 30 - (apex - (this.groundY - 30)) * (-Math.sin(t * Math.PI));
       this.coins.push({ x, y, spin: Math.random() * Math.PI * 2 });
     }
@@ -464,60 +443,37 @@ export class DinoGame {
     const w = this.canvas.width / this.dpr;
     const h = this.canvas.height / this.dpr;
 
-    // Day/night blend based on score (peaks near mid-cycle, never fully dark).
-    // 0 = pure day, ~0.7 max night. Score 0 starts in full daylight.
-    const phase = (this.score % 1000) / 1000;
-    const triangle = 1 - Math.abs(phase - 0.5) * 2;
-    const night = Math.max(0, triangle - 0.3);
-    this._drawSky(w, h, night);
+    // Always full daylight.
+    this._drawSky(w, h);
 
-    // Sun / moon
+    // Sun
     const celestX = w * 0.78, celestY = h * 0.18;
-    if (night < 0.5) {
-      ctx.fillStyle = "rgba(255, 245, 220, 0.9)";
-      ctx.beginPath(); ctx.arc(celestX, celestY, 28, 0, Math.PI * 2); ctx.fill();
-    } else {
-      ctx.fillStyle = "rgba(230, 230, 240, 0.9)";
-      ctx.beginPath(); ctx.arc(celestX, celestY, 24, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "rgba(70,70,90,0.6)";
-      ctx.beginPath(); ctx.arc(celestX - 6, celestY - 4, 6, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(celestX + 4, celestY + 6, 4, 0, Math.PI * 2); ctx.fill();
-    }
+    ctx.fillStyle = "rgba(255, 245, 220, 0.95)";
+    ctx.beginPath(); ctx.arc(celestX, celestY, 32, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "rgba(255, 245, 220, 0.25)";
+    ctx.beginPath(); ctx.arc(celestX, celestY, 60, 0, Math.PI * 2); ctx.fill();
 
-    // Mountains (far)
-    this._drawMountains(w, h, this._tint("#7a8896", "#3b4452", night), -this.parallax.far * 0.3, 140, 0.6);
-    this._drawMountains(w, h, this._tint("#5b6a78", "#27313e", night), -this.parallax.far * 0.6, 100, 0.85);
+    this._drawMountains(w, h, "#7a8896", -this.parallax.far * 0.3, 140, 0.6);
+    this._drawMountains(w, h, "#5b6a78", -this.parallax.far * 0.6, 100, 0.85);
 
-    // Trees (mid)
-    this._drawTrees(w, h, -this.parallax.mid, this._tint("#39553a", "#1b2c1d", night), 0);
-    this._drawTrees(w, h, -this.parallax.mid * 1.2 + 60, this._tint("#2c4530", "#142016", night), 12);
+    this._drawTrees(w, h, -this.parallax.mid, "#39553a", 0);
+    this._drawTrees(w, h, -this.parallax.mid * 1.2 + 60, "#2c4530", 12);
 
-    // Clouds
-    ctx.fillStyle = night > 0.4 ? "rgba(180,180,210,0.5)" : "rgba(255,255,255,0.85)";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
     for (const c of this.clouds) this._drawCloud(c.x, c.y, c.s);
 
-    // Ground
-    this._drawGround(w, h, night);
+    this._drawGround(w, h);
 
-    // Coins (behind dino but in front of ground)
     for (const c of this.coins) this._drawCoin(c);
-
-    // Powerups
     for (const p of this.powerups) this._drawPowerup(p);
-
-    // Obstacles
     for (const o of this.obstacles) this._drawObstacle(o);
-
-    // Dino
     this._drawDino(dead);
 
-    // Slow-mo overlay tint
     if (this.activePowerups.slowmo > 0) {
       ctx.fillStyle = "rgba(177,140,255,0.10)";
       ctx.fillRect(0, 0, w, h);
     }
 
-    // Particles
     for (const p of this.particles) {
       ctx.globalAlpha = Math.max(0, p.life / 50);
       ctx.fillStyle = p.color;
@@ -525,7 +481,6 @@ export class DinoGame {
     }
     ctx.globalAlpha = 1;
 
-    // Combo indicator (centered above dino)
     if (this.combo >= 2) {
       ctx.save();
       ctx.font = "700 22px -apple-system, system-ui, sans-serif";
@@ -538,43 +493,14 @@ export class DinoGame {
     }
   }
 
-  _tint(dayHex, nightHex, t) {
-    const a = this._hexToRgb(dayHex);
-    const b = this._hexToRgb(nightHex);
-    const r = Math.round(a.r + (b.r - a.r) * t);
-    const g = Math.round(a.g + (b.g - a.g) * t);
-    const bl = Math.round(a.b + (b.b - a.b) * t);
-    return `rgb(${r},${g},${bl})`;
-  }
-  _hexToRgb(hex) {
-    const v = hex.replace("#", "");
-    return {
-      r: parseInt(v.substring(0, 2), 16),
-      g: parseInt(v.substring(2, 4), 16),
-      b: parseInt(v.substring(4, 6), 16),
-    };
-  }
-
-  _drawSky(w, h, night) {
+  _drawSky(w, h) {
     const ctx = this.ctx;
     const sky = ctx.createLinearGradient(0, 0, 0, this.groundY);
-    // Smooth lerp between day and night palettes so the sky never goes pitch black.
-    sky.addColorStop(0,   this._tint("#7fb3d9", "#324272", night));
-    sky.addColorStop(0.6, this._tint("#b6d4e6", "#4a5687", night));
-    sky.addColorStop(1,   this._tint("#dbe6e1", "#6b779d", night));
+    sky.addColorStop(0,   "#7fb3d9");
+    sky.addColorStop(0.6, "#b6d4e6");
+    sky.addColorStop(1,   "#dbe6e1");
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, this.groundY);
-    if (night > 0.35) {
-      ctx.save();
-      ctx.globalAlpha = Math.min(1, (night - 0.35) * 3);
-      ctx.fillStyle = "#ffffff";
-      for (let i = 0; i < 40; i++) {
-        const sx = (i * 137) % w;
-        const sy = (i * 71) % (this.groundY * 0.6);
-        ctx.fillRect(sx, sy, 1.5, 1.5);
-      }
-      ctx.restore();
-    }
   }
 
   _drawMountains(w, h, color, offset, peakH, alpha) {
@@ -628,19 +554,14 @@ export class DinoGame {
     ctx.fill();
   }
 
-  _drawGround(w, h, night) {
+  _drawGround(w, h) {
     const ctx = this.ctx;
     const dirt = ctx.createLinearGradient(0, this.groundY, 0, h);
-    if (night < 0.5) {
-      dirt.addColorStop(0, "#5a4a36");
-      dirt.addColorStop(1, "#2d2418");
-    } else {
-      dirt.addColorStop(0, "#2c2418");
-      dirt.addColorStop(1, "#15110b");
-    }
+    dirt.addColorStop(0, "#5a4a36");
+    dirt.addColorStop(1, "#2d2418");
     ctx.fillStyle = dirt;
     ctx.fillRect(0, this.groundY, w, h - this.groundY);
-    ctx.fillStyle = this._tint("#3e5a32", "#1b2818", night);
+    ctx.fillStyle = "#3e5a32";
     ctx.fillRect(0, this.groundY - 4, w, 6);
     ctx.fillStyle = "rgba(0,0,0,0.25)";
     const off = -this.parallax.near;
@@ -653,7 +574,7 @@ export class DinoGame {
 
   _drawCoin(c) {
     const ctx = this.ctx;
-    const sx = Math.abs(Math.cos(c.spin)); // 0..1 — flip illusion
+    const sx = Math.abs(Math.cos(c.spin));
     const r = 9;
     ctx.save();
     ctx.translate(c.x, c.y);
@@ -672,7 +593,6 @@ export class DinoGame {
     const bob = Math.sin(p.bob) * 4;
     ctx.save();
     ctx.translate(p.x, p.y + bob);
-    // glow
     const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, 22);
     grd.addColorStop(0, p.color + "");
     grd.addColorStop(1, p.color + "00");
@@ -680,7 +600,6 @@ export class DinoGame {
     ctx.globalAlpha = 0.6;
     ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2); ctx.fill();
     ctx.globalAlpha = 1;
-    // body
     ctx.fillStyle = p.color;
     ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = "#101319";
@@ -732,7 +651,6 @@ export class DinoGame {
     const y = d.y;
     const step = Math.floor(d.runFrame);
 
-    // Shield aura
     if (this.activePowerups.shield > 0) {
       ctx.save();
       ctx.strokeStyle = "rgba(108, 198, 255, 0.85)";
@@ -788,7 +706,6 @@ export class DinoGame {
       }
     }
 
-    // Magnet aura
     if (this.activePowerups.magnet > 0) {
       ctx.save();
       ctx.strokeStyle = "rgba(247, 201, 72, 0.65)";
