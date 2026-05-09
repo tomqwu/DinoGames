@@ -95,22 +95,24 @@ body {
 .icon-btn { position: relative; }
 
 /* ===== Title screen ===== */
-.screen--title { background: #000; }
+.screen--title { background: #0a0c10; }
 .title__bg {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 70%, rgba(50,80,40,0.35), transparent 60%),
-    linear-gradient(180deg, #1a2230 0%, #0e1115 60%, #0a0c10 100%);
+  overflow: hidden;
 }
-.title__bg::before {
+.title__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.title__bg::after {
+  /* gentle vignette so text/buttons stay readable */
   content: "";
   position: absolute; inset: 0;
   background:
-    /* mountains */
-    linear-gradient(to top, #161a22 18%, transparent 18%),
-    radial-gradient(circle at 70% 78%, rgba(80,90,75,0.55) 0 6%, transparent 7%),
-    radial-gradient(circle at 30% 80%, rgba(60,75,55,0.5) 0 8%, transparent 9%);
-  filter: blur(0.4px);
+    radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(0,0,0,0.45) 90%);
+  pointer-events: none;
 }
 .title__content {
   position: relative;
@@ -120,48 +122,33 @@ body {
   gap: 40px;
   width: min(1200px, 92vw);
   padding: 24px;
+  z-index: 1;
 }
 .title__hero { display: flex; align-items: center; gap: 20px; }
 .title__dino {
   width: clamp(220px, 30vw, 380px);
-  aspect-ratio: 1 / 1;
-  background:
-    radial-gradient(circle at 60% 55%, #4d5a48 0 35%, transparent 36%),
-    radial-gradient(circle at 35% 60%, #3c4738 0 30%, transparent 31%);
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
-  position: relative;
-}
-.title__dino::before {
-  /* simple dino silhouette using clip-path */
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, #5c6a52, #2f372b);
-  clip-path: polygon(
-    72% 12%, 92% 18%, 96% 32%, 86% 36%, 86% 30%, 78% 30%, 80% 42%,
-    72% 50%, 70% 70%, 80% 76%, 78% 86%, 70% 86%, 64% 74%, 58% 78%,
-    58% 88%, 50% 88%, 46% 76%, 36% 70%, 24% 78%, 18% 72%, 28% 60%,
-    24% 52%, 30% 38%, 42% 30%, 56% 22%, 62% 16%
-  );
-  filter: drop-shadow(0 4px 0 #1f2519);
+  height: auto;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,0.65));
 }
 .title__logo h1 {
   font-family: "Impact", "Arial Black", sans-serif;
   font-size: clamp(72px, 11vw, 160px);
   margin: 0;
   letter-spacing: 0.04em;
-  color: #c9c5b8;
+  color: #d8d3c4;
   text-shadow:
     0 4px 0 #4a4639,
-    0 8px 10px rgba(0,0,0,0.6);
+    0 8px 14px rgba(0,0,0,0.7);
   -webkit-text-stroke: 2px #2c281d;
 }
 .title__logo span {
   display: block;
   font-size: clamp(18px, 2.4vw, 32px);
   letter-spacing: 0.6em;
-  color: #b9b5a8;
+  color: #d0ccbf;
   margin-top: -8px;
   margin-left: 6px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 .title__menu {
   display: flex; flex-direction: column; gap: 14px;
