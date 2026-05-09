@@ -464,36 +464,27 @@ export class DinoGame {
     const w = this.canvas.width / this.dpr;
     const h = this.canvas.height / this.dpr;
 
-    // Day/night blend based on score (peaks near mid-cycle, never fully dark).
-    // 0 = pure day, ~0.7 max night. Score 0 starts in full daylight.
-    const phase = (this.score % 1000) / 1000;
-    const triangle = 1 - Math.abs(phase - 0.5) * 2;
-    const night = Math.max(0, triangle - 0.3);
+    // Always full daylight — day/night cycle removed for consistent visibility.
+    const night = 0;
     this._drawSky(w, h, night);
 
-    // Sun / moon
+    // Sun
     const celestX = w * 0.78, celestY = h * 0.18;
-    if (night < 0.5) {
-      ctx.fillStyle = "rgba(255, 245, 220, 0.9)";
-      ctx.beginPath(); ctx.arc(celestX, celestY, 28, 0, Math.PI * 2); ctx.fill();
-    } else {
-      ctx.fillStyle = "rgba(230, 230, 240, 0.9)";
-      ctx.beginPath(); ctx.arc(celestX, celestY, 24, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = "rgba(70,70,90,0.6)";
-      ctx.beginPath(); ctx.arc(celestX - 6, celestY - 4, 6, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(celestX + 4, celestY + 6, 4, 0, Math.PI * 2); ctx.fill();
-    }
+    ctx.fillStyle = "rgba(255, 245, 220, 0.95)";
+    ctx.beginPath(); ctx.arc(celestX, celestY, 32, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "rgba(255, 245, 220, 0.25)";
+    ctx.beginPath(); ctx.arc(celestX, celestY, 60, 0, Math.PI * 2); ctx.fill();
 
     // Mountains (far)
-    this._drawMountains(w, h, this._tint("#7a8896", "#3b4452", night), -this.parallax.far * 0.3, 140, 0.6);
-    this._drawMountains(w, h, this._tint("#5b6a78", "#27313e", night), -this.parallax.far * 0.6, 100, 0.85);
+    this._drawMountains(w, h, "#7a8896", -this.parallax.far * 0.3, 140, 0.6);
+    this._drawMountains(w, h, "#5b6a78", -this.parallax.far * 0.6, 100, 0.85);
 
     // Trees (mid)
-    this._drawTrees(w, h, -this.parallax.mid, this._tint("#39553a", "#1b2c1d", night), 0);
-    this._drawTrees(w, h, -this.parallax.mid * 1.2 + 60, this._tint("#2c4530", "#142016", night), 12);
+    this._drawTrees(w, h, -this.parallax.mid, "#39553a", 0);
+    this._drawTrees(w, h, -this.parallax.mid * 1.2 + 60, "#2c4530", 12);
 
     // Clouds
-    ctx.fillStyle = night > 0.4 ? "rgba(180,180,210,0.5)" : "rgba(255,255,255,0.85)";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
     for (const c of this.clouds) this._drawCloud(c.x, c.y, c.s);
 
     // Ground
@@ -555,26 +546,14 @@ export class DinoGame {
     };
   }
 
-  _drawSky(w, h, night) {
+  _drawSky(w, h /*, night */) {
     const ctx = this.ctx;
     const sky = ctx.createLinearGradient(0, 0, 0, this.groundY);
-    // Smooth lerp between day and night palettes so the sky never goes pitch black.
-    sky.addColorStop(0,   this._tint("#7fb3d9", "#324272", night));
-    sky.addColorStop(0.6, this._tint("#b6d4e6", "#4a5687", night));
-    sky.addColorStop(1,   this._tint("#dbe6e1", "#6b779d", night));
+    sky.addColorStop(0,   "#7fb3d9");
+    sky.addColorStop(0.6, "#b6d4e6");
+    sky.addColorStop(1,   "#dbe6e1");
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, this.groundY);
-    if (night > 0.35) {
-      ctx.save();
-      ctx.globalAlpha = Math.min(1, (night - 0.35) * 3);
-      ctx.fillStyle = "#ffffff";
-      for (let i = 0; i < 40; i++) {
-        const sx = (i * 137) % w;
-        const sy = (i * 71) % (this.groundY * 0.6);
-        ctx.fillRect(sx, sy, 1.5, 1.5);
-      }
-      ctx.restore();
-    }
   }
 
   _drawMountains(w, h, color, offset, peakH, alpha) {
@@ -628,19 +607,14 @@ export class DinoGame {
     ctx.fill();
   }
 
-  _drawGround(w, h, night) {
+  _drawGround(w, h /*, night */) {
     const ctx = this.ctx;
     const dirt = ctx.createLinearGradient(0, this.groundY, 0, h);
-    if (night < 0.5) {
-      dirt.addColorStop(0, "#5a4a36");
-      dirt.addColorStop(1, "#2d2418");
-    } else {
-      dirt.addColorStop(0, "#2c2418");
-      dirt.addColorStop(1, "#15110b");
-    }
+    dirt.addColorStop(0, "#5a4a36");
+    dirt.addColorStop(1, "#2d2418");
     ctx.fillStyle = dirt;
     ctx.fillRect(0, this.groundY, w, h - this.groundY);
-    ctx.fillStyle = this._tint("#3e5a32", "#1b2818", night);
+    ctx.fillStyle = "#3e5a32";
     ctx.fillRect(0, this.groundY - 4, w, 6);
     ctx.fillStyle = "rgba(0,0,0,0.25)";
     const off = -this.parallax.near;
