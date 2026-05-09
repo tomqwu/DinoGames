@@ -464,9 +464,11 @@ export class DinoGame {
     const w = this.canvas.width / this.dpr;
     const h = this.canvas.height / this.dpr;
 
-    // Day/night blend based on score
-    const phase = (this.score % 1000) / 1000; // 0..1 within cycle
-    const night = Math.max(0, Math.min(1, Math.abs(phase - 0.5) * 2 - 0.4)); // 0..1
+    // Day/night blend based on score (peaks near mid-cycle, never fully dark).
+    // 0 = pure day, ~0.7 max night. Score 0 starts in full daylight.
+    const phase = (this.score % 1000) / 1000;
+    const triangle = 1 - Math.abs(phase - 0.5) * 2;
+    const night = Math.max(0, triangle - 0.3);
     this._drawSky(w, h, night);
 
     // Sun / moon
@@ -556,25 +558,22 @@ export class DinoGame {
   _drawSky(w, h, night) {
     const ctx = this.ctx;
     const sky = ctx.createLinearGradient(0, 0, 0, this.groundY);
-    if (night < 0.5) {
-      sky.addColorStop(0, "#7fb3d9");
-      sky.addColorStop(0.6, "#b6d4e6");
-      sky.addColorStop(1, "#dbe6e1");
-    } else {
-      sky.addColorStop(0, "#1b2347");
-      sky.addColorStop(0.6, "#2a3360");
-      sky.addColorStop(1, "#3a4170");
-    }
+    // Smooth lerp between day and night palettes so the sky never goes pitch black.
+    sky.addColorStop(0,   this._tint("#7fb3d9", "#324272", night));
+    sky.addColorStop(0.6, this._tint("#b6d4e6", "#4a5687", night));
+    sky.addColorStop(1,   this._tint("#dbe6e1", "#6b779d", night));
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, this.groundY);
-    if (night > 0.5) {
-      // stars
-      ctx.fillStyle = "rgba(255,255,255,0.85)";
+    if (night > 0.35) {
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, (night - 0.35) * 3);
+      ctx.fillStyle = "#ffffff";
       for (let i = 0; i < 40; i++) {
         const sx = (i * 137) % w;
         const sy = (i * 71) % (this.groundY * 0.6);
         ctx.fillRect(sx, sy, 1.5, 1.5);
       }
+      ctx.restore();
     }
   }
 
