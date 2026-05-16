@@ -1,0 +1,403 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01804809598FB2520359D515 /* DinoRealmsIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D58ED7E80D5A8B832139AEE /* DinoRealmsIOSApp.swift */; };
+		3AE69B04F84B448E19B0D5C0 /* StoryCodex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A4E4C567B22E218C841BC /* StoryCodex.swift */; };
+		A882DFFF6A4E85F7D37E0D76 /* GameProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0CE129A6C3E5C49FE98029 /* GameProgressTests.swift */; };
+		D05B24AD8F3B992259ED76A7 /* GameProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8F9722C7ED4701A4F6AD8D /* GameProgress.swift */; };
+		E05AFE91814B58CEEC28B364 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8DC48652FF4EF40E1E3C06 /* GameScene.swift */; };
+		EA712BB1FE1077A765B58872 /* StoryCodexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339F7E0A1DCC77E6CF88642B /* StoryCodexTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F7E608A3FA98957CE88BAC46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97FE4A7C761C59968B9C997E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 34B5A4520C4559D2DE76A786;
+			remoteInfo = DinoRealmsIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B8DC48652FF4EF40E1E3C06 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		2D58ED7E80D5A8B832139AEE /* DinoRealmsIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinoRealmsIOSApp.swift; sourceTree = "<group>"; };
+		339F7E0A1DCC77E6CF88642B /* StoryCodexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCodexTests.swift; sourceTree = "<group>"; };
+		384A4ABF9DBE03E2AFD4F176 /* DinoRealmsIOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DinoRealmsIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E0CE129A6C3E5C49FE98029 /* GameProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgressTests.swift; sourceTree = "<group>"; };
+		5DFA20DE236AE13F0EE0A39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9A8F9722C7ED4701A4F6AD8D /* GameProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgress.swift; sourceTree = "<group>"; };
+		A45A4E4C567B22E218C841BC /* StoryCodex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCodex.swift; sourceTree = "<group>"; };
+		FE079EAA17318D752093A059 /* DinoRealmsIOSTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DinoRealmsIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0E07E353770652EAB735E108 /* DinoRealmsIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E0CE129A6C3E5C49FE98029 /* GameProgressTests.swift */,
+				339F7E0A1DCC77E6CF88642B /* StoryCodexTests.swift */,
+			);
+			path = DinoRealmsIOSTests;
+			sourceTree = "<group>";
+		};
+		2B1D965E21A629E04EC9D1BD = {
+			isa = PBXGroup;
+			children = (
+				FEE20DE9BBB1AC20F150F768 /* DinoRealmsIOS */,
+				0E07E353770652EAB735E108 /* DinoRealmsIOSTests */,
+				EB5507C0A393B4D152CDE1EA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EB5507C0A393B4D152CDE1EA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				384A4ABF9DBE03E2AFD4F176 /* DinoRealmsIOS.app */,
+				FE079EAA17318D752093A059 /* DinoRealmsIOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEE20DE9BBB1AC20F150F768 /* DinoRealmsIOS */ = {
+			isa = PBXGroup;
+			children = (
+				2D58ED7E80D5A8B832139AEE /* DinoRealmsIOSApp.swift */,
+				9A8F9722C7ED4701A4F6AD8D /* GameProgress.swift */,
+				2B8DC48652FF4EF40E1E3C06 /* GameScene.swift */,
+				5DFA20DE236AE13F0EE0A39A /* Info.plist */,
+				A45A4E4C567B22E218C841BC /* StoryCodex.swift */,
+			);
+			path = DinoRealmsIOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0F84C3DA8ECCC06DD3EEC174 /* DinoRealmsIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3EB08459A5C56AE9F5E031F /* Build configuration list for PBXNativeTarget "DinoRealmsIOSTests" */;
+			buildPhases = (
+				57A1C9D111DFA9D1CCA0D23D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				29390D9ADB5E3D0EFF4B2F3E /* PBXTargetDependency */,
+			);
+			name = DinoRealmsIOSTests;
+			packageProductDependencies = (
+			);
+			productName = DinoRealmsIOSTests;
+			productReference = FE079EAA17318D752093A059 /* DinoRealmsIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		34B5A4520C4559D2DE76A786 /* DinoRealmsIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23EB092B79CF3686DF465111 /* Build configuration list for PBXNativeTarget "DinoRealmsIOS" */;
+			buildPhases = (
+				D6EC9E36EE82B3258FBC3FDB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DinoRealmsIOS;
+			packageProductDependencies = (
+			);
+			productName = DinoRealmsIOS;
+			productReference = 384A4ABF9DBE03E2AFD4F176 /* DinoRealmsIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		97FE4A7C761C59968B9C997E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = E1618113191AD741106D6876 /* Build configuration list for PBXProject "DinoRealmsIOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2B1D965E21A629E04EC9D1BD;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EB5507C0A393B4D152CDE1EA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				34B5A4520C4559D2DE76A786 /* DinoRealmsIOS */,
+				0F84C3DA8ECCC06DD3EEC174 /* DinoRealmsIOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		57A1C9D111DFA9D1CCA0D23D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A882DFFF6A4E85F7D37E0D76 /* GameProgressTests.swift in Sources */,
+				EA712BB1FE1077A765B58872 /* StoryCodexTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6EC9E36EE82B3258FBC3FDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01804809598FB2520359D515 /* DinoRealmsIOSApp.swift in Sources */,
+				D05B24AD8F3B992259ED76A7 /* GameProgress.swift in Sources */,
+				E05AFE91814B58CEEC28B364 /* GameScene.swift in Sources */,
+				3AE69B04F84B448E19B0D5C0 /* StoryCodex.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		29390D9ADB5E3D0EFF4B2F3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 34B5A4520C4559D2DE76A786 /* DinoRealmsIOS */;
+			targetProxy = F7E608A3FA98957CE88BAC46 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		21A831E34ACACE7F8AC7F5C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2D18F5BA163CF62191A68B4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = DinoRealmsIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomwu.DinoRealmsIOS;
+				PRODUCT_NAME = DinoRealmsIOS;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		37501B8C664F98C5FC522AD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		54E3A69BDDEFE672D0B23D92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomwu.DinoRealmsIOSTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DinoRealmsIOS.app/DinoRealmsIOS";
+			};
+			name = Debug;
+		};
+		6A9FFA6B590CCE624DD7929B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomwu.DinoRealmsIOSTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DinoRealmsIOS.app/DinoRealmsIOS";
+			};
+			name = Release;
+		};
+		D17FBF0516C42B4EB47722D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = DinoRealmsIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomwu.DinoRealmsIOS;
+				PRODUCT_NAME = DinoRealmsIOS;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		23EB092B79CF3686DF465111 /* Build configuration list for PBXNativeTarget "DinoRealmsIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D18F5BA163CF62191A68B4E /* Debug */,
+				D17FBF0516C42B4EB47722D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C3EB08459A5C56AE9F5E031F /* Build configuration list for PBXNativeTarget "DinoRealmsIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54E3A69BDDEFE672D0B23D92 /* Debug */,
+				6A9FFA6B590CCE624DD7929B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E1618113191AD741106D6876 /* Build configuration list for PBXProject "DinoRealmsIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21A831E34ACACE7F8AC7F5C3 /* Debug */,
+				37501B8C664F98C5FC522AD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 97FE4A7C761C59968B9C997E /* Project object */;
+}
