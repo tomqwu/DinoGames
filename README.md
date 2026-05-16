@@ -1,110 +1,86 @@
-# Dino Adventure
+# Dino Blocklands iOS
 
-An endless-runner dinosaur game built to match the supplied design — extended with missions, coins, powerups, combos, and a day/night cycle. Pure HTML / CSS / JavaScript, no build step, no dependencies.
+A native iPhone and iPad SpriteKit blocky fantasy RPG MVP. You play as a dinosaur adventurer in an original classic-MMO-inspired world: choose a class in Blockshire, accept an elder quest, clear Bramble Camp, earn gear, enter Tailblock Cave, defeat the Sky Wyrm, and restore the Sky Gate Shrine.
 
-## Run it
+## Story Direction
 
-Any static file server works.
+Dino Blocklands is set on **First Earth**, a mythic prehistoric Earth before humans. Dinosaur clans preserve culture through migration songs, amber memory, stone shrines, crest marks, and oral history rather than written books.
+
+Blockshire is a small clan village where young dinosaurs pass into adulthood through one of three rites:
+
+- **Guardian**: the shell oath, a herd-protector tradition.
+- **Emberclaw**: the scout path, a hunter tradition that reads heat, ash, and danger.
+- **Stonesinger**: the stone rhythm, a lore-keeper tradition tied to amber and shrine resonance.
+
+The first story arc begins when Elder Mossbeak warns that the Sky Gate Shrine has gone silent. Bramble growth blocks the old migration path, Tailblock Cave wakes with broken ancestral memory, and the Sky Wyrm inside the cave has been twisted by the fallen Sky Relic. The player's first rite is to clear the path, recover the relic, reopen the Sky Gate, and restore the shrine so Blockshire can carry its clan memory forward.
+
+## Requirements
+
+- Xcode 26.5 or newer
+- iOS Simulator runtime installed
+- XcodeGen, installed with:
 
 ```bash
-# Option 1 — npm (uses npx serve)
-npm start
-#   → http://localhost:5173
-
-# Option 2 — Python (no Node needed)
-python3 -m http.server 5173
-#   → http://localhost:5173
-
-# Option 3 — just open the file
-open index.html      # macOS
-xdg-open index.html  # Linux
+brew install xcodegen
 ```
 
-> Opening `index.html` directly works in most browsers, but a few block ES module imports from `file://` URLs. If you see a blank page, use one of the server options above.
+## Build
+
+```bash
+xcodegen generate
+xcodebuild \
+  -project DinoRealmsIOS.xcodeproj \
+  -scheme DinoRealmsIOS \
+  -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M5)' \
+  build
+```
+
+## Run
+
+Open the project:
+
+```bash
+open DinoRealmsIOS.xcodeproj
+```
+
+Choose an iPad or iPhone simulator, then press Run.
+
+Or install and launch the latest simulator build from the command line:
+
+```bash
+APP_DIR="$(xcodebuild -project DinoRealmsIOS.xcodeproj -scheme DinoRealmsIOS -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M5)' -showBuildSettings 2>/dev/null | awk -F'= ' '/ TARGET_BUILD_DIR = / {print $2; exit}')/DinoRealmsIOS.app"
+xcrun simctl boot "iPad Pro 13-inch (M5)" 2>/dev/null || true
+xcrun simctl install booted "$APP_DIR"
+xcrun simctl launch booted com.tomwu.DinoRealmsIOS
+```
+
+## Test
+
+```bash
+xcodebuild \
+  -project DinoRealmsIOS.xcodeproj \
+  -scheme DinoRealmsIOS \
+  -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M5)' \
+  test
+```
 
 ## Controls
 
-| Action | Keyboard | Mouse / Touch |
-| --- | --- | --- |
-| Jump | `↑` / `Space` / `W` | Click / tap top half |
-| Slide | `↓` / `S` (hold) | Hold mouse / tap bottom half |
-| Pause | `Esc` / `P` | Pause button (top-right HUD) |
-| Reroll missions | `R` (in-game) | — |
-| Retry | `Enter` (on game-over) | RETRY button |
+- Drag on the left side for the virtual joystick.
+- Tap the right action button; its label changes for nearby actions like Train, Talk, Open, Enter, Unlock, Commune, and Attack.
+- Follow the objective arrow and distance hint when you are not close to the next quest target.
+- The camera follows the dinosaur automatically.
+- In Simulator, enable keyboard capture to use WASD/arrow keys and Space/Return for action.
 
-## Gameplay features
+## MVP Scope
 
-### Missions
-Three missions are active at any time, shown on the right side of the HUD with progress bars. Complete a mission to earn coins; a fresh mission slides into the slot.
-
-Mission templates include:
-
-- Reach **N** points
-- Collect **N** coins
-- Jump / slide **N** times
-- Clear **N** cacti / rocks
-- Dodge **N** pterodactyls
-- Reach an **xN** combo
-- Collect **N** powerups
-- Survive **N** seconds
-
-Press `R` mid-run to reroll all three missions if you don't like the current set.
-
-### Coins
-Collect golden coins that float in arcs above the path. Coins boost your score, count toward missions, and add to a **lifetime coin total** stored in `localStorage`. The HUD shows `run-coins / lifetime`.
-
-### Powerups
-Periodically a glowing orb spawns on the track. Grab it for a 6-second buff:
-
-- 🛡️ **Shield (S, blue)** — absorbs one collision, then breaks.
-- 🧲 **Magnet (M, yellow)** — pulls nearby coins toward you.
-- 🐢 **Slow-mo (T, purple)** — slows obstacle scroll ~45% so jumps are easier.
-
-Active powerups show as chips under the score with a depleting timer bar.
-
-### Combo multiplier
-Clear obstacles in quick succession (within ~2 seconds) to build a combo (`x2`, `x3`, …). Combos award bonus score, show above the dino, and feed the combo mission. Touching anything resets the combo to zero.
-
-### Day / Night cycle
-The sky, mountains, ground, and clouds shift between day and night every ~500 score, with stars appearing at night and a moon replacing the sun. Pure visual flavor — gameplay is unaffected.
-
-### Run summary
-Game over now shows: final score, best, coins earned, longest combo, total obstacles cleared, and missions completed this run.
-
-## Screens
-
-- **Title** — PLAY, HOW TO PLAY, SETTINGS, plus sound and music toggles.
-- **Game** — Score & best HUD, coin counter, mission list, powerup chips, pause button.
-- **Game Over** — Run summary, RETRY, HOME.
-- **How to Play** — Instructions and controls reference.
-- **Settings** — Sound, music, difficulty (Easy / Normal / Hard), reset best score.
-
-## Persistence
-
-Stored in `localStorage`:
-
-| Key | Description |
-| --- | --- |
-| `dino-adventure:best` | Highest score reached |
-| `dino-adventure:coins` | Lifetime coin total |
-| `dino-adventure:missions-completed` | Lifetime mission completions |
-| `dino-adventure:settings` | `sfx`, `music`, `difficulty` |
-
-You can wipe the best score from the Settings screen.
-
-## Project layout
-
-```
-index.html       # all five screens, HUD, overlays
-styles.css       # theme, HUD, mission list, powerup chips, toasts
-src/
-  main.js        # screen routing, input, mission/coin persistence
-  game.js        # canvas game loop (physics, obstacles, coins, powerups, combo)
-  missions.js    # mission templates + manager (auto-reroll on complete)
-  sfx.js         # tiny WebAudio sound bank (jump, coin, powerup, hit…)
-package.json     # `npm start` → static server on :5173
-```
-
-## Browser support
-
-Modern evergreen browsers (Chrome, Firefox, Safari, Edge). Uses Canvas 2D, ES modules, and the Web Audio API.
+- Universal iPhone/iPad app.
+- Touch-first top-down blocky RPG zone.
+- Runtime-generated visuals with no external art assets.
+- HUD with class, level, HP, keys, gold, amber, XP, quest text, contextual prompts, and next-objective guidance.
+- Three dinosaur classes: Guardian, Emberclaw, and Stonesinger, each with different combat stats.
+- Blockshire quest hub with class rite mentors, Elder Mossbeak, gear rewards, and a Bramble Camp quest chain.
+- Overworld enemies, readable health pips, combat, chests, key gate, cuttable brush, heart pickups, gear, gold, and relic progression.
+- Three-room Tailblock Cave dungeon with a separate dungeon key, Boss Door, Sky Wyrm boss, and Sky Relic reward.
+- Centralized story/dialogue codex for First Earth lore, clan rites, elder hints, and quest text.
+- Unit tests for class choice, quest progression, leveling, rewards, completion, and story text.
